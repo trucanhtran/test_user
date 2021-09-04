@@ -19,11 +19,9 @@ class UserController < ApplicationController
       redirect_to show_users_path(current_user.id), notice: "Code không hợp lệ"
     else
       #Lưu vào record
-      byebug
       present_user = User.find_by(invited_code: invited_code)
       record = Record.create(user_id: current_user.id, present_user_id: present_user.id)
       present_user.coin += 30
-      byebug
       last_prensent_user = User.find_by(id: present_user.record.present_user_id)
       if last_prensent_user.present?
         last_prensent_user.coin += 20
