@@ -1,0 +1,11 @@
+<%= form_with(url: users_path, method: :post) do |f|%>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%=f.submit "Tạo"%>
+  </div>
+<% end %>
+
+<%= render partial: "list_users", locals: {users: @users}%>
