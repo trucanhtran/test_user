@@ -1,0 +1,14 @@
+<div>
+  <span>Tên</span>
+  <span>Mã giới thiệu</span>
+  <span>Coin</span>
+</div>
+<div>
+  <% users.each do |user| %>
+    <div>
+      <%= user&.name || "No name" %>
+      <%= user&.invited_code %>
+      <%= user&.coin %>
+    </div>
+  <% end %>
+</div>

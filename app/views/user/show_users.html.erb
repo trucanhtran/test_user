@@ -1,0 +1,28 @@
+<div>
+  <span>Chào</span>
+  <%= @user&.name %>
+</div>
+
+<div>
+  <span>Mã giới thiệu của bạn là:</span>
+  <%= @user&.invited_code %>
+</div>
+
+<div>
+  <span>Số coin hiện tại:</span>
+  <%= @user&.coin %>
+</div>
+
+<div>
+  <span>Nhập mã giới thiệu:</span>
+  <%= form_with(url: invited_code_path(@user.id)) do |form|%>
+    <div>
+      <%= form.text_field :invited_code %>
+    </div>
+    <div>
+      <%= form.submit "Nhập code"%>
+    </div>
+  <% end %>
+</div>
+
+<%= render partial: "list_users", locals: {users: @users}%>
