@@ -22,14 +22,14 @@ class UserController < ApplicationController
       present_user = User.find_by(invited_code: invited_code)
       record = Record.create(user_id: current_user.id, present_user_id: present_user.id)
       present_user.coin += 30
-      last_prensent_user = User.find_by(id: present_user.record.present_user_id)
-      if last_prensent_user.present?
-        last_prensent_user.coin += 20
-        last_prensent_user.save
-        lastest_prensent_user = User.find_by(id: last_present_user.record.present_user_id)
-        if lastest_prensent_user.present?
-          lastest_prensent_user.coin += 10
-          lastest_prensent_user.save
+      last_present_user = User.find_by(id: present_user&.record&.present_user_id)
+      if last_present_user.present?
+        last_present_user.coin += 20
+        last_present_user.save
+        lastest_present_user = User.find_by(id: last_present_user&.record&.present_user_id)
+        if  lastest_present_user.present?
+          lastest_present_user.coin += 10
+          lastest_present_user.save
         end
       end
       present_user.update(coin: present_user.coin)
