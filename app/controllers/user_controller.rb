@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :get_users, only: %i[index show_users ]
+  before_action :get_users, only: %i[index show_users]
 
   def index
     @user = User.new
@@ -14,18 +14,15 @@ class UserController < ApplicationController
     current_user = User.find_by(id: params[:id])
     check_code = current_user.invited_code == invited_code
     #Kiểm tra code
-    if check_code
+    if check_code || current_user&.record.present?
       #Code bị trùng chuyển về trang hiện tại
       redirect_to show_users_path(current_user.id), notice: "Code không hợp lệ"
     else
-      present_user = User.find_by(invited_code: invited_code )
+      #Lưu vào record
+      present_user = User.find_by(invited_code: invited_code)
+      record = Record.create(user_id: current_user.id, present_user_id: present_user.id)
       present_user.coin += 30;
       present_user.update(coin: present_user.coin)
-      byebug
-      #Lưu vào record
-      record = current_user.records.new(users_id: present_user.id)
-      record.save!
-      byebug
       redirect_to show_users_path(current_user.id), notice: "Nhập thành công"
     end
 
