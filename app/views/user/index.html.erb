@@ -1,11 +1,17 @@
-<%= form_with(url: users_path, method: :post) do |f|%>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+<%= form_with(url: users_path, method: :post, class: "row g-3 the-form") do |f|%>
+
+  <div class="mb-3 col-auto">
+    <%= f.label :name, class: "form-label" %>
   </div>
-  <div>
-    <%=f.submit "Tạo"%>
+
+  <div class="mb-3 col-auto">
+    <%= f.text_field :name, placeholder: "Nhập tên", class: "form-control" %>
   </div>
+
+  <div class="mb-3 col-auto">
+    <%=f.submit "Tạo", class: "btn btn-primary"%>
+  </div>
+
 <% end %>
 
 <%= render partial: "list_users", locals: {users: @users}%>

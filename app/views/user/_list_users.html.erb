@@ -1,14 +1,25 @@
-<div>
-  <span>Tên</span>
-  <span>Mã giới thiệu</span>
-  <span>Coin</span>
-</div>
-<div>
-  <% users.each do |user| %>
-    <div>
-      <%= user&.name || "No name" %>
-      <%= user&.invited_code %>
-      <%= user&.coin %>
-    </div>
-  <% end %>
+<div class="users-info container">
+
+  <div class="row justify-content-center bold">
+    <span class="col col-lg-2">Tên</span>
+    <span class="col col-lg-2">Mã giới thiệu</span>
+    <span class="col col-lg-2">Coin</span>
+  </div>
+
+  <div>
+    <% users.each do |user| %>
+      <div class="row justify-content-center">
+        <span class="col col-lg-2">
+          <%= user&.name || "No name" %>
+        </span>
+        <span class="col col-lg-2">
+          <%= user&.invited_code %>
+        </span>
+        <span class="col col-lg-2">
+          <%= user&.coin %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+
 </div>
