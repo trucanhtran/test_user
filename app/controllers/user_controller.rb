@@ -18,20 +18,13 @@ class UserController < ApplicationController
       #Code bị trùng chuyển về trang hiện tại
       redirect_to show_users_path(current_user.id), notice: "Code không hợp lệ"
     else
+      extra_coin = 30
       #Lưu vào record
       present_user = User.find_by(invited_code: invited_code)
       record = Record.create(user_id: current_user.id, present_user_id: present_user.id)
-      present_user.coin += 30
-      last_present_user = User.find_by(id: present_user&.record&.present_user_id)
-      if last_present_user.present?
-        last_present_user.coin += 20
-        last_present_user.save
-        lastest_present_user = User.find_by(id: last_present_user&.record&.present_user_id)
-        if  lastest_present_user.present?
-          lastest_present_user.coin += 10
-          lastest_present_user.save
-        end
-      end
+      present_user.coin += extra_coin
+      #Gọi hàm tăng coin
+      raising_coin(present_user, extra_coin)
       present_user.update(coin: present_user.coin)
       redirect_to show_users_path(current_user.id), notice: "Nhập thành công"
     end
@@ -60,5 +53,17 @@ class UserController < ApplicationController
     @users = User.all
   end
 
+  def raising_coin(present_user, extra_coin)
+    extra_coin -= 10
+
+    return if extra_coin == 0
+    last_present_user = User.find_by(id: present_user&.record&.present_user_id)
+    if last_present_user.present?
+      last_present_user.coin += extra_coin
+      last_present_user.save
+    end
+
+    raising_coin(last_present_user, extra_coin)
+  end
 
 end
